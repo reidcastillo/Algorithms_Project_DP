@@ -12,7 +12,7 @@
 - Run main.py  
   This will prompt you to give the name of your input file. From here, the optimal solution along with the items chosen will be displayed in the terminal.
 
-Files:
+  Files:
 - knapsack.py: contains the Knapsack algorithm functions, along with input and output functions.
 - main.py: Takes in a users input file and computes the optimal solution
 - experimental_analysis.py: Used to experiemnt various inputs and analyze runtime and memory usage. Also generates visualizations.
