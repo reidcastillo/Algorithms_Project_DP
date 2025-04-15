@@ -12,6 +12,11 @@
 - Run main.py  
   This will prompt you to give the name of your input file. From here, the optimal solution along with the items chosen will be displayed in the terminal.
 
+Files:
+- knapsack.py: contains the Knapsack algorithm functions, along with input and output functions.
+- main.py: Takes in a users input file and computes the optimal solution
+- experimental_analysis.py: Used to experiemnt various inputs and analyze runtime and memory usage. Also generates visualizations.
+
 ### Approach:
 This program uses two functions to solve the Knapsack problem.  
 1. knapsack(values, weights, capacity) - this function takes in a list of values, weights, and the integer capacity. Using these it finds the max value obtainable using dynamic-programming.
