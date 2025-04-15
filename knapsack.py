@@ -35,9 +35,43 @@ def post_process(OPT, values, weights, capacity):
             n -= 1
             continue
         else:
-            items.append(n-1)   # The item contributes to the value, so it is included
+            items.append(n)   # The item contributes to the value, so it is included
             w -= weights[n-1]
             n -= 1
 
-    return items
+    return list(reversed(items))
+
+# Function that parses the input from a text file (1st line = values, 2nd line = weights, 3rd line = capacity)
+def read_input(file):
+
+    with open(file, 'r') as file:
+        lines = file.readlines()
+
+        first_line = lines[0]
+        values = []
+        for value in first_line.split():
+            values.append(int(value))
+
+        second_line = lines[1]
+        weights = []
+        for weight in second_line.split():
+            weights.append(int(weight))
+
+        capacity = int(lines[2])
+
+    return values, weights, capacity
+
+# Function that displays the results of the Knapsack algorithm
+def display_results(value, items):
+    print("Optimal value:", value)
+    chosen = "Items Chosen: "
+
+    for i, item in enumerate(items):
+        if i == len(items) - 1:
+            chosen += str(item)
+        else:
+            chosen += str(item) + ", "
+
+    print(chosen)
+
 

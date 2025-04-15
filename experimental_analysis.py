@@ -5,13 +5,9 @@ import time
 import tracemalloc
 from typing import Callable, List, Tuple
 
-
-
 #Generates random instances of varying n, it Times the algorithm with time.perf_counter.
 # it Measures peak memory with tracemalloc.
 # it prints a neat table and writes times.csv, memory.csv so we can make graphs for the paper?
-
-from dp_algorithm import dp_algorithm, KnapsackResult
 
 
 def generate_instance(n: int, *, max_weight: int = 100, max_value: int = 100,
@@ -20,7 +16,6 @@ def generate_instance(n: int, *, max_weight: int = 100, max_value: int = 100,
     values = [random.randint(1, max_value) for _ in range(n)]
     capacity = int(sum(weights) * capacity_ratio)
     return values, weights, capacity
-
 
 def time_algorithm(algorithm: Callable[[List[int], List[int], int], KnapsackResult],
                    sizes: List[int]) -> List[float]:
