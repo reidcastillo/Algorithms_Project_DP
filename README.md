@@ -34,6 +34,7 @@ This program uses two functions to solve the Knapsack problem.
   sufficiently small, this time complexity is polynomial (pesudo-polynomial).
 
 ### Experiemntal Analysis:
-    Explain here
+In order to check the preformance of the program a benchmark function was created, this script will choose random inputs that increase in size and will measure the run time and the memory required. 
+capacity of the knapsack (w) is also logged and is used in each case to reflect the complexity O(nW) of the algo.  The results are printed in the terminal when the file is run and the results are saved too times/memory csv so it can be used to make graphs for the report. 
    
 
