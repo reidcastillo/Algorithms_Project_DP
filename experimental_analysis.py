@@ -4,9 +4,7 @@ import random
 import time
 import tracemalloc
 from typing import Callable, List, Tuple
-# this basically replaces knapsackResult in the type hints with Tuple, so i think "knapsackresults" can just
-# be removed? I mean its not really harming anything in the program
-# so its not that big a deal
+
 from knapsack import knapsack
 
 #Generates random instances of varying n, it Times the algorithm with time.perf_counter.
