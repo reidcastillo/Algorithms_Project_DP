@@ -5,6 +5,8 @@ import time
 import tracemalloc
 from typing import Callable, List, Tuple
 
+from knapsack import knapsack
+
 #Generates random instances of varying n, it Times the algorithm with time.perf_counter.
 # it Measures peak memory with tracemalloc.
 # it prints a neat table and writes times.csv, memory.csv so we can make graphs for the paper?
@@ -60,3 +62,17 @@ def output_results(sizes: List[int], times: List[float], mem: List[int], *,
         write_csv("memory.csv", ["n", "memory_kib"], list(zip(sizes, mem)))
         print("\nCSV files 'times.csv' and 'memory.csv' written — import them into Excel, Google Sheets, or any plotting tool you like.")
 
+
+if __name__ == "__main__": # activites file as input
+    import argparse
+# builds random list of inputs, runtime / memory algo using the knapsack() and prints the table
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--max_n", type=int, default=200)   # basically just defaults if you dont specify in the terminal
+    parser.add_argument("--step",  type=int, default=20)
+    parser.add_argument("--no_csv", action="store_true")
+    args = parser.parse_args()
+# write times.csv and memory if we need to use that for the graph, if not we can just take it out.
+    sizes = list(range(args.step, args.max_n + 1, args.step))
+    times = time_algorithm(knapsack, sizes)
+    mem   = memory_algorithm(knapsack, sizes)
+    output_results(sizes, times, mem, save_csv=not args.no_csv)
