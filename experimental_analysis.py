@@ -62,17 +62,46 @@ def output_results(sizes: List[int], times: List[float], mem: List[int], *,
         write_csv("memory.csv", ["n", "memory_kib"], list(zip(sizes, mem)))
         print("\nCSV files 'times.csv' and 'memory.csv' written — import them into Excel, Google Sheets, or any plotting tool you like.")
 
+def time_and_memory_with_capacity(sizes: List[int]) -> Tuple[List[int], List[int], List[float], List[int]]:
 
-if __name__ == "__main__": # activites file as input
+    capacities = []
+    times = []
+    memory = []
+
+    for n in sizes:
+        values, weights, capacity = generate_instance(n)
+        capacities.append(capacity)
+
+        start = time.perf_counter()
+        tracemalloc.start()
+        knapsack(values, weights, capacity)
+        _, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+
+        times.append(time.perf_counter() - start)
+        memory.append(peak // 1024)
+
+    return sizes, capacities, times, memory
+
+if __name__ == "__main__":
     import argparse
-# builds random list of inputs, runtime / memory algo using the knapsack() and prints the table
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("--max_n", type=int, default=200)   # basically just defaults if you dont specify in the terminal
+    parser.add_argument("--max_n", type=int, default=200)
     parser.add_argument("--step",  type=int, default=20)
     parser.add_argument("--no_csv", action="store_true")
     args = parser.parse_args()
-# write times.csv and memory if we need to use that for the graph, if not we can just take it out.
+
     sizes = list(range(args.step, args.max_n + 1, args.step))
-    times = time_algorithm(knapsack, sizes)
-    mem   = memory_algorithm(knapsack, sizes)
-    output_results(sizes, times, mem, save_csv=not args.no_csv)
+    sizes, capacities, times, mem = time_and_memory_with_capacity(sizes)
+
+    print("\nEmpirical Results (0/1 Knapsack, With Capacity)\n" + "-" * 60)
+    print(f"{'n':>6} | {'W':>6} | {'time (s)':>10} | {'memory (KiB)':>14}")
+    print("-" * 60)
+    for n, w, t, m in zip(sizes, capacities, times, mem):
+        print(f"{n:6d} | {w:6d} | {t:10.6f} | {m:14d}")
+
+    if not args.no_csv:
+        write_csv("times.csv", ["n", "capacity", "time_s"], list(zip(sizes, capacities, times)))
+        write_csv("memory.csv", ["n", "capacity", "memory_kib"], list(zip(sizes, capacities, mem)))
+        print("\nCSV files written with capacity column.")
