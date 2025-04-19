@@ -29,9 +29,20 @@ This program uses two functions to solve the Knapsack problem.
    backawards on the dp array, and determining whether each item encountered contributed to the current sub-problems solution. If the items value was utilized in the solution, then add   
    that item to the list. This function then returns the list of these items in the order they were provided.
 
+3. optimized_knapsack(values, weights, capacity) - this is the optimized versiono of the knapsack algorithm that reduces the space complexity from O(nW) to O(W). It does this by storing 
+   solutions in a 1d array of size capacity + 1. It goes through every item bottom up like before, however this time it fills in for each possible capacity w in a reverse fashion. Doing 
+   this essentially finds the optimal solutions to each w at each given i, and simply updates the solutions for each i that is encountered. This helps eliminate redundant storage of every 
+   i and w combination, and instead just stores the best for each w.
+
 ### Time Complexity:
   The time complexity for this solution is big theta(n W). This is due to computing the optimal solution for each item and each possible capacity of the knapsack from 0 to W. If W is 
-  sufficiently small, this time complexity is polynomial (pesudo-polynomial).
+  sufficiently small, this time complexity is polynomial (pesudo-polynomial). This also holds true for the optimized knapsack algorithm as well, as it still iterates over all possible   
+  pairs of i and W.
+
+### Space Complexity:
+   In the original knapsack algorithm, the space complexity equates to O(nW). This is because a 2d array is utilized to store all combinations of item i and weight w. However, the 
+   optimized knapsack algorithm improves this to O(W). It utilizes a 1d array that only stores the optimal value for all possible weights 0 to W. This results in a capcity (W) + 1 sized   
+   array, ultimately saving a lot of space.
 
 ### Experiemntal Analysis:
 In order to check the preformance of the program a benchmark function was created, this script will choose random inputs that increase in size and will measure the run time and the memory required. 
