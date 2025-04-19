@@ -23,6 +23,26 @@ def knapsack(values, weights, capacity):
 
     return OPT, OPT[n][capacity]   # Returns the dp array and the max value obtainable with the full knapsack size and n possible items
 
+# Optimized knapsack approach that uses a 1d array only, optimizing the space complexity to O(W)
+def optimized_knapsack(values, weights, capacity):
+
+    # The number of values and weights does not match
+    if len(values) != len(weights):
+        raise ValueError("values and weights must be the same length")
+    n = len(values)
+
+    # Initialize the dp array, but only of size capacity + 1 this time. Each index holds optimal value for each possible capacity
+    OPT = [0] * (capacity + 1)
+
+    for i in range(1, n + 1):   # For each item
+        for w in range(capacity, weights[i-1] - 1, -1):   # For each possible knapsack capacity, in reverse
+
+            # Pick max of two cases: Don't take the item = the same solution to the prior weight
+            # Take the item = the new value is the new items value + the optimal value from the prior weight
+            OPT[w] = max(OPT[w], values[i-1] + OPT[w - weights[i - 1]])
+
+    return OPT[capacity]   # Returns the dp array and the max value obtainable with the full knapsack size and n possible items
+
 # Post-processing that obtains a list of the items selected (also references the PowerPoint)
 def post_process(OPT, values, weights, capacity):
 

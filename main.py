@@ -1,4 +1,4 @@
-from knapsack import knapsack, post_process, read_input, display_results
+from knapsack import knapsack, post_process, read_input, display_results, optimized_knapsack
 
 
 if __name__ == "__main__":
