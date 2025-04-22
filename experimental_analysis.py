@@ -5,7 +5,8 @@ import time
 import tracemalloc
 from typing import Callable, List, Tuple
 
-from knapsack import knapsack
+from knapsack import optimized_knapsack as knapsack
+
 
 #Generates random instances of varying n, it Times the algorithm with time.perf_counter.
 # it Measures peak memory with tracemalloc.
